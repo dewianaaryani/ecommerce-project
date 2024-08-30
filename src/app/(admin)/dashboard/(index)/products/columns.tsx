@@ -8,6 +8,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Edit } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import FormDelete from "./_components/form-delete"
 
 export type TColumn = {
     id: number
@@ -79,7 +80,7 @@ export const columns: ColumnDef<TColumn>[] = [
                             <Edit className="w-4 h-4 mr-2" /> Edit
                         </Link>
                     </Button>
-                    {/* <FormDelete id={brand.id} /> */}
+                    <FormDelete id={product.id} />
                 </div>
             )
         }

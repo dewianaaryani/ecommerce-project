@@ -6,9 +6,10 @@ import CardPoduct from './card-product';
 
 interface ListProductsProps {
     title: ReactNode
+    isShowDetail?: boolean
 }
 
-export default async function ListProducts({ title }: ListProductsProps) {
+export default async function ListProducts({ title, isShowDetail = true }: ListProductsProps) {
     const products = await getProducts()
 
     return (
@@ -17,7 +18,9 @@ export default async function ListProducts({ title }: ListProductsProps) {
                 <h2 className="font-bold text-2xl leading-[34px]">
                     {title}
                 </h2>
-                <a href="catalog.html" className="p-[12px_24px] border border-[#E5E5E5] rounded-full font-semibold">Explore All</a>
+                {isShowDetail && (
+                    <a href="catalog.html" className="p-[12px_24px] border border-[#E5E5E5] rounded-full font-semibold">Explore All</a>
+                )}
             </div>
             <div className="grid grid-cols-5 gap-[30px]">
                 {products.map((item) => (

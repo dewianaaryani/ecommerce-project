@@ -32,7 +32,7 @@ export async function getProducts(){
                         name:true
                     }
                 },
-                price: true
+                price: true,
             }
         })
         const response = products.map((item) => {

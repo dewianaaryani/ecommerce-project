@@ -16,5 +16,6 @@ export type TProduct = {
     name: string
     category_name: string
     price: number
-
 }
+
+export type TCart = TProduct & {quantity: number}

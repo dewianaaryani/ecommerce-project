@@ -3,9 +3,26 @@ import Navbar from '../../_components/navbar'
 import CarouselImages from './_components/carousel-images'
 import ListProducts from '../../_components/list-products'
 import PriceInfo from './_components/price-info'
+import { Tparams } from '@/types'
+import { getProductById } from './lib/data'
+import { redirect } from 'next/navigation'
+import { getUser } from '@/lib/auth'
 
-export default function DetailProductPage() {
-  return (
+interface DetailProductProp {
+    params: Tparams
+}
+
+export default async function DetailProductPage({params}: Tparams) {
+    const {session} = await getUser()
+console.log(session);
+
+    
+  const product = await getProductById(Number.parseInt(params.id))
+    if(!product){
+        return redirect('/')
+    }
+  
+    return (
     <>
     <header className="bg-[#EFF3FA] pt-[30px] h-[480px] -mb-[310px]">
         <Navbar />
@@ -19,7 +36,7 @@ export default function DetailProductPage() {
                 <span className="text-sm text-[#6A7789]">/</span>
                 <a className="page text-sm text-[#6A7789] last-of-type:text-black">Details</a>
             </div>
-            <h1 className="font-bold text-4xl leading-9">iMac Pro Anniv Edition 100th</h1>
+            <h1 className="font-bold text-4xl leading-9">{product.name}</h1>
         </div>
         <div className="flex items-center gap-2 justify-end">
             <div className="flex items-center">
@@ -39,10 +56,10 @@ export default function DetailProductPage() {
                     <img src="/assets/icons/Star-gray.svg" alt="star" />
                 </div>
             </div>
-            <p className="font-semibold">(4,389)</p>
+            <p className="font-semibold">({product._count.orders})</p>
         </div>
     </div>
-    <CarouselImages />
+    <CarouselImages images={product.images} />
     <div id="details-benefits" className="container max-w-[1130px] mx-auto flex items-center gap-[50px] justify-center mt-[50px]">
         <div className="flex items-center gap-[10px]">
             <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#FFC736] items-center justify-center overflow-hidden">
@@ -76,7 +93,7 @@ export default function DetailProductPage() {
         <div className="max-w-[650px] w-full flex flex-col gap-[30px]">
             <div id="about" className="flex flex-col gap-[10px]">
                 <h3 className="font-semibold">About Product</h3>
-                <p className="leading-[32px]">iMac brings incredible, room-filling audio to any space. Two pairs of force-cancelling woofers create rich, deep bass — and each is balanced with a high-performance tweeter for a massive soundstage that takes music, movies, and more to the next level. 12-Core CPU 18-Core GPU 18GB Unified Memory 1TB SSD Storage¹ iMac also supports Spatial Audio with Dolby Atmos. And when you combine that with a 4.5K Retina display, it's like bringing the whole theater home.</p>
+                <p className="leading-[32px]">{product.description}</p>
             </div>
             <div id="testi" className="flex flex-col gap-[10px]">
                 <h3 className="font-semibold">Real Testimonials</h3>
@@ -229,7 +246,13 @@ export default function DetailProductPage() {
                 </div>
             </div>
         </div>
-        <PriceInfo />
+        <PriceInfo isLogin={session ? true : false} item={{
+            id:product.id,
+            category_name: product.category.name,
+            image_url: product.images[0],
+            name: product.name,
+            price: Number(product.price),
+        }} />
     </div>
     <div id="recommedations" className="container max-w-[1130px] mx-auto flex flex-col gap-[30px] pb-[100px] mt-[70px]">
 

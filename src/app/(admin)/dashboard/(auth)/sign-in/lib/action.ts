@@ -48,8 +48,9 @@ export async function SignIn(
             error: 'Email/Password incorrect'
         }
     }
-
-    const session = await lucia.createSession(existingUser.id.toString(), {})
+    const userId:any = existingUser.id;
+    console.log(userId)
+    const session = await lucia.createSession(userId, {})
 
 
     const sessionCookie = lucia.createSessionCookie(session.id)

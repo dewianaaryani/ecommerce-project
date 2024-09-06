@@ -12,7 +12,7 @@ interface DetailProductProp {
     params: Tparams
 }
 
-export default async function DetailProductPage({params}: Tparams) {
+export default async function DetailProductPage({params}: DetailProductProp) {
     const {session} = await getUser()
 console.log(session);
 

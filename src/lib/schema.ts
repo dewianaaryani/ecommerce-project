@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { nullable, z } from 'zod';
 
 export const ALLOW_MIME_TYPES = ['image/jpg', 'image/jpeg', 'image/png'];
 
@@ -65,3 +65,12 @@ export const schemaProduct = z.object({
 export const schemaProductEdit = schemaProduct.extend({
     id: z.number({ required_error: 'Product is required' }),
   }).omit({ images: true });
+
+export const schemaShippingAddress = z.object({
+  name: z.string({required_error: 'Name is required'}).min(5, {message: 'Name should have min 5 characters'}),
+  address: z.string({required_error: 'Address is required'}).min(5, {message: 'Address should have min 5 characters'}), 
+  city: z.string({required_error: 'City is required'}).min(5, {message: 'City should have min 5 characters'}),
+  postal_code: z.string({required_error: 'Postal Code is required'}).min(5, {message: 'Postal Code should have min 5 characters'}),
+  notes: z.string().nullable(),
+  phone: z.string({required_error: 'Phone is required'}).min(5, {message: 'Phone should have min 5 characters'}),
+})

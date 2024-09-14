@@ -24,7 +24,9 @@ export default function SignUpPage() {
             <div className="container max-w-[1130px] mx-auto flex flex-1 items-center justify-center py-5">
                 <form action={formAction} className="w-[500px] bg-white p-[50px_30px] flex flex-col gap-5 rounded-3xl border border-[#E5E5E5]">
                     <div className="flex justify-center">
-                        <img src="assets/logos/logo-black.svg" alt="logo" />
+                         <Link href="/">
+                            <img src="./assets/logos/logo-black.svg" alt="logo" />
+                        </Link>
                     </div>
                     <h1 className="font-bold text-2xl leading-[34px]">Sign Up</h1>
                     {state.error !== "" && (

@@ -3,8 +3,12 @@ import Navbar from './_components/navbar'
 import ListCategory from './_components/list-category'
 import ListProducts from './_components/list-products'
 import ListBrands from './_components/list-brands'
+import { getMostBoughtProduct } from './lib/data'
+import Image from 'next/image'
 
-export default function LandingPage() {
+export default async function LandingPage() {
+    const mostBoughtProduct = await getMostBoughtProduct();
+   
     return (
         <>
             <header className="bg-[#EFF3FA] pt-[30px] pb-[50px]">
@@ -15,11 +19,13 @@ export default function LandingPage() {
                             <div className="w-[22px] h-[22px] flex shrink-0">
                                 <img src="assets/icons/crown.svg" alt="icon" />
                             </div>
-                            <p className="font-semibold text-sm">Most Popular 100th Product in Belanja</p>
+                            <p className="font-semibold text-sm">Most Popular Product in Belanja</p>
                         </div>
                         <div className="flex flex-col gap-[14px]">
-                            <h1 className="font-bold text-[55px] leading-[55px]">Working Faster 10x</h1>
-                            <p className="text-lg leading-[34px] text-[#6A7789]">Dolor si amet lorem super-power features riches than any other platform devices AI integrated.</p>
+                            <h1 className="font-bold text-[55px] leading-[55px]">{mostBoughtProduct?.name}</h1>
+                            <p className="text-lg leading-[34px] text-[#6A7789]">
+                                {mostBoughtProduct?.description.split('.')[0] || 'No description available.'}
+                            </p>
                         </div>
                         <div className="flex items-center gap-3">
                             <a href="" className="p-[18px_24px] rounded-full font-semibold bg-[#0D5CD7] text-white">Add to Cart</a>
@@ -27,18 +33,25 @@ export default function LandingPage() {
                         </div>
                     </div>
                     <div className="w-[588px] h-[360px] flex shrink-0 overflow-hidden relative">
-                        <img src="assets/banners/mba13-m2-digitalmat-gallery-1-202402-Photoroom 2.png" className="object-contain" alt="icon" />
+                    <Image
+                        src={mostBoughtProduct?.image_url || 'assets/banners/mba13-m2-digitalmat-gallery-1-202402-Photoroom 2.png'} // Add a default image if none is provided
+                        alt="Product image"
+                        layout="responsive" // Adjust this based on your needs (e.g., "fixed", "intrinsic", or "responsive")
+                        width={400} // Replace with the desired width
+                        height={500} // Replace with the desired height
+                        className="object-contain"
+                    />
                         <div className="absolute top-[60%] bg-white p-[14px_16px] rounded-3xl flex items-center gap-[10px]">
                             <div className="w-12 h-12 flex shrink-0 rounded-full items-center justify-center bg-[#FFC736] overflow-hidden">
                                 <img src="assets/icons/code-circle.svg" className="w-6 h-6" alt="icon" />
                             </div>
                             <p className="font-semibold text-sm">Bonus Mac OS <br /> Capitan Pro</p>
                         </div>
-                        <div className="absolute right-0 top-[30%] bg-white p-[14px_16px] rounded-3xl flex flex-col items-center gap-[10px]">
+                        <div className="absolute right-0 top-[30%] bg-white p-[14px_16px] rounded-3xl flex items-center gap-[10px]">
+                            <p className="font-semibold text-sm text-center">Include <br /> Warranty</p>
                             <div className="w-12 h-12 flex shrink-0 rounded-full items-center justify-center bg-[#FFC736] overflow-hidden">
                                 <img src="assets/icons/star-outline.svg" className="w-6 h-6" alt="icon" />
                             </div>
-                            <p className="font-semibold text-sm text-center">Include <br /> Warranty</p>
                         </div>
                     </div>
                 </div>
